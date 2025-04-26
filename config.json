@@ -1,0 +1,10 @@
+{
+  "token": "BOT_TOKENINIZ",
+  "prefix": "!",
+  "sahipID": "SAHIP_ID",
+  "presence": {
+    "type": "PLAYING",
+    "status": "online",
+    "message": "Ares Code"
+  }
+}
