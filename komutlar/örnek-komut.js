@@ -1,8 +1,11 @@
 module.exports = {
-  name: "örnek",
-  description: "Bu bir örnek komuttur",
-  execute(message, args) {
-    // Komutun işlevleri buraya gelicek
-    message.channel.send("Örnek komut çalıştı!");
+  name: '', // Komut adı
+  description: '', // Komut açıklaması
+  async execute(message, args) {
+    // Kodun İçeriği Buraya
   }
 };
+
+
+
+// ARES CODE V14 PREFİXLİ BOŞ ALTYAPI \\
