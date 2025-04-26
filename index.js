@@ -6,7 +6,7 @@ const config = require('./config.json');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 client.commands = new Collection();
 
-const commandsPath = path.join(__dirname, 'commands');
+const commandsPath = path.join(__dirname, 'komutlar');
 fs.readdirSync(commandsPath).filter(file => file.endsWith('.js')).forEach(file => {
   const command = require(path.join(commandsPath, file));
   client.commands.set(command.name, command);
