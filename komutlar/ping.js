@@ -1,7 +1,7 @@
 module.exports = {
-  name: "ping",
-  description: "Botun gecikme süresini gösterir",
+  name: 'ping',
+  description: 'Botun ping değerini gösterir.',
   execute(message) {
-    message.channel.send(`🏓 Gecikme: **${Date.now() - message.createdTimestamp}ms**`);
+    message.reply(`Pong! Gecikme: ${Date.now() - message.createdTimestamp}ms`);
   }
 };
