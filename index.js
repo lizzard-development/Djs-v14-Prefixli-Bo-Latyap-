@@ -1,42 +1,35 @@
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const config = require('./config.json');
 
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMembers
-  ]
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+client.commands = new Collection();
+
+const commandsPath = path.join(__dirname, 'commands');
+fs.readdirSync(commandsPath).filter(file => file.endsWith('.js')).forEach(file => {
+  const command = require(path.join(commandsPath, file));
+  client.commands.set(command.name, command);
 });
 
-client.commands = new Collection();
-const komutlarPath = path.join(__dirname, 'komutlar');
-const komutDosyalari = fs.readdirSync(komutlarPath).filter(file => file.endsWith('.js'));
-
-for (const dosya of komutDosyalari) {
-  const dosyaYolu = path.join(komutlarPath, dosya);
-  const komut = require(dosyaYolu);
-  client.commands.set(komut.name, komut);
-}
 
 const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+fs.readdirSync(eventsPath).filter(file => file.endsWith('.js')).forEach(file => {
+  const event = require(path.join(eventsPath, file));
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(client, ...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(client, ...args));
+  }
+});
 
-for (const file of eventFiles) {
-  const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
-  client.on(event.name, (...args) => event.execute(...args, client));
-}
 
 client.on('messageCreate', message => {
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  if (!message.guild || message.author.bot) return;
+  if (!message.content.startsWith(config.prefix)) return;
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
-
   const command = client.commands.get(commandName);
   if (!command) return;
 
@@ -44,8 +37,13 @@ client.on('messageCreate', message => {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply('Komut çalıştırılırken hata oluştu!');
+    message.reply('Komut çalıştırılırken bir hata oluştu.');
   }
 });
 
 client.login(config.token);
+
+
+
+// ARES CODE V14 PREFİXLİ BOŞ ALTYAPI \\
+
