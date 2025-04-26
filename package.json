@@ -1,0 +1,12 @@
+{
+  "name": "ares-code-bos-altyapı",
+  "version": "1.0.0",
+  "description": "Discord.js v14 prefixli boş altyapı",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.0.0"
+  }
+}
