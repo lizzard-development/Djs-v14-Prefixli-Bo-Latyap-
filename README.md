@@ -18,7 +18,7 @@
 ### ⚙️ Kurulum
 ```bash
 # 1. Depoyu klonlayın
-git clone 
+git clone https://github.com/lizzard-development/Djs-v14-Prefixli-Bos-Altyapi
 
 # 2. Gerekli paketleri yükleyin
 npm install
